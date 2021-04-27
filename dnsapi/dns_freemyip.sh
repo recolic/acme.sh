@@ -27,7 +27,7 @@ dns_freemyip_add() {
   #save the credentials to the account conf file.
   _saveaccountconf_mutable freemyip_token "$freemyip_token"
 
-  # txtvalue must be url-encoded. But it's not necessary for acme txt value. 
+  # txtvalue must be url-encoded. But it's not necessary for acme txt value.
   _get "https://freemyip.com/update?token=$freemyip_token&domain=$fulldomain&txt=$txtvalue" | grep OK
   return $?
 }
@@ -53,8 +53,7 @@ dns_freemyip_rm() {
   #save the credentials to the account conf file.
   _saveaccountconf_mutable freemyip_token "$freemyip_token"
 
-  # Leave the TXT record as empty or "null" to delete the record. 
+  # Leave the TXT record as empty or "null" to delete the record.
   _get "https://freemyip.com/update?token=$freemyip_token&domain=$fulldomain&txt=" | grep OK
   return $?
 }
-
