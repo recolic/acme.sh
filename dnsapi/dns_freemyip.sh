@@ -4,7 +4,7 @@
 #
 ########  Public functions #####################
 
-freemyip_token=90c55c84d72bf53f87e65a3c
+FREEMYIP_Token="xxxx"
 
 #Usage: dns_freemyip_add   _acme-challenge.www.domain.com   "XKrxpRBosdIKFzxW_CT3KLZNf6q0HG9i01zxXp5CPBs"
 dns_freemyip_add() {
@@ -16,19 +16,19 @@ dns_freemyip_add() {
   _debug "fulldomain: $fulldomain"
   _debug "txtvalue: $txtvalue"
 
-  freemyip_token="${freemyip_token:-$(_readaccountconf_mutable freemyip_token)}"
-  if [ -z "$freemyip_token" ]; then
-    freemyip_token=""
-    _err "You don't specify freemyip_token yet."
+  FREEMYIP_Token="${FREEMYIP_Token:-$(_readaccountconf_mutable FREEMYIP_Token)}"
+  if [ -z "$FREEMYIP_Token" ]; then
+    FREEMYIP_Token=""
+    _err "You don't specify FREEMYIP_Token yet."
     _err "Please specify your token and try again."
     return 1
   fi
 
   #save the credentials to the account conf file.
-  _saveaccountconf_mutable freemyip_token "$freemyip_token"
+  _saveaccountconf_mutable FREEMYIP_Token "$FREEMYIP_Token"
 
   # txtvalue must be url-encoded. But it's not necessary for acme txt value.
-  _get "https://freemyip.com/update?token=$freemyip_token&domain=$fulldomain&txt=$txtvalue" | grep OK
+  _get "https://freemyip.com/update?token=$FREEMYIP_Token&domain=$fulldomain&txt=$txtvalue" | grep OK
   return $?
 }
 
@@ -42,18 +42,18 @@ dns_freemyip_rm() {
   _debug "fulldomain: $fulldomain"
   _debug "txtvalue: $txtvalue"
 
-  freemyip_token="${freemyip_token:-$(_readaccountconf_mutable freemyip_token)}"
-  if [ -z "$freemyip_token" ]; then
-    freemyip_token=""
-    _err "You don't specify freemyip_token yet."
+  FREEMYIP_Token="${FREEMYIP_Token:-$(_readaccountconf_mutable FREEMYIP_Token)}"
+  if [ -z "$FREEMYIP_Token" ]; then
+    FREEMYIP_Token=""
+    _err "You don't specify FREEMYIP_Token yet."
     _err "Please specify your token and try again."
     return 1
   fi
 
   #save the credentials to the account conf file.
-  _saveaccountconf_mutable freemyip_token "$freemyip_token"
+  _saveaccountconf_mutable FREEMYIP_Token "$FREEMYIP_Token"
 
   # Leave the TXT record as empty or "null" to delete the record.
-  _get "https://freemyip.com/update?token=$freemyip_token&domain=$fulldomain&txt=" | grep OK
+  _get "https://freemyip.com/update?token=$FREEMYIP_Token&domain=$fulldomain&txt=" | grep OK
   return $?
 }
